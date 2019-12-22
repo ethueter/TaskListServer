@@ -22,7 +22,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static("public", { maxAge: 31557600000 }));
 
 // app.use('/', indexRouter);
 // app.use('/users', usersRouter);
@@ -52,6 +52,8 @@ var api = new ParseServer({
   serverURL: `${process.env.serverUrl}/parse`,
   masterKey: process.env.masterKey
 });
+
+app.use("/parse", api);
 
 var dashboard = new ParseDashboard({
   apps: [
